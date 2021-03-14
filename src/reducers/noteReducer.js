@@ -9,6 +9,7 @@ const notes = (state = [], action) => {
         {
           id: ++num,
           note: action.payload.note,
+          date: action.payload.date,
         },
       ];
     case actions.NOTE_REMOVED:
