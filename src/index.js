@@ -7,7 +7,6 @@ import reportWebVitals from "./reportWebVitals";
 import configureStore from "./store/configureStore";
 
 const store = configureStore();
-console.log(store.getState());
 ReactDOM.render(
   <Provider store={store}>
     <App />
