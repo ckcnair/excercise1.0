@@ -36,6 +36,7 @@ class App extends Component {
         <div className="col-md-10">
           <li key={index} className="list-group-item clearfix">
             {data.note.title}
+            <span class="badge badge-light">&nbsp;{data.date}</span>
           </li>
         </div>
         <div className="col-md-2">
@@ -73,7 +74,7 @@ class App extends Component {
           </form>
           <hr />
           {
-            <ul className="list-group">
+            <ul className="list-group list-group-flush">
               {this.props.notes && this.props.notes.length
                 ? this.props.notes.map((note, i) => this.listGroupItem(note, i))
                 : "Nothing to show!"}
