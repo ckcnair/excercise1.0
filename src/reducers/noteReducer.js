@@ -1,14 +1,21 @@
 import * as actions from "../actions/actionTypes";
 
-let notes = (state = [], action) => {
+let num = 0;
+const notes = (state = [], action) => {
   switch (action.type) {
     case actions.NOTE_CREATED:
-      return [...state, Object.assign({}, action.note)];
+      //return [...state, Object.assign({}, action.note)];
+      return [
+        ...state,
+        {
+          id: ++num,
+          note: action.payload.note,
+        },
+      ];
     case actions.NOTE_REMOVED:
-      return state.filter((data, i) => i !== action.id);
+      return state.filter((data, i) => i !== action.payload.id);
     default:
       return state;
   }
 };
-
 export default notes;
