@@ -4,7 +4,6 @@ let num = 0;
 const notes = (state = [], action) => {
   switch (action.type) {
     case actions.NOTE_CREATED:
-      //return [...state, Object.assign({}, action.note)];
       return [
         ...state,
         {
