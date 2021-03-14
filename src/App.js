@@ -7,18 +7,22 @@ class App extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
-      note: "",
+      title: "",
     };
   }
 
   handleChange(event) {
-    this.setState({ note: event.target.value });
+    this.setState({ title: event.target.value });
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.createNote({ note: this.state.note });
-    this.setState({ note: "" });
+    if (!this.state.title.trim() || Number(this.state.title)) return;
+    let note = {
+      title: this.state.title,
+    };
+    this.props.createNote(note);
+    this.setState({ title: "" });
   }
 
   removeNotes = (event, index) => {
@@ -31,7 +35,7 @@ class App extends Component {
       <div className="row">
         <div className="col-md-10">
           <li key={index} className="list-group-item clearfix">
-            {console.log(data)}
+            {data.note.title}
           </li>
         </div>
         <div className="col-md-2">
@@ -53,21 +57,28 @@ class App extends Component {
         <div>
           <h3>Create New</h3>
           <form onSubmit={this.handleSubmit}>
-            <input
-              type="text"
-              value={this.state.note}
-              onChange={this.handleChange}
-              className="form-control"
-            />
-            <button type="submit" className="btn btn-success">
-              Save
-            </button>
+            <div className="form-row">
+              <div className="col-md-10">
+                <input
+                  type="text"
+                  value={this.state.title}
+                  onChange={this.handleChange}
+                  className="form-control"
+                />
+              </div>
+              <button type="submit" className="btn btn-success">
+                Save
+              </button>
+            </div>
           </form>
-          <ul className="list-group">
-            {this.props.notes && this.props.notes.length
-              ? this.props.notes.map((note, i) => this.listGroupItem(note, i))
-              : "Nothing to show!"}
-          </ul>
+          <hr />
+          {
+            <ul className="list-group">
+              {this.props.notes && this.props.notes.length
+                ? this.props.notes.map((note, i) => this.listGroupItem(note, i))
+                : "Nothing to show!"}
+            </ul>
+          }
         </div>
       </div>
     );
@@ -75,6 +86,7 @@ class App extends Component {
 }
 
 const mapStateToProps = (state, props) => {
+  console.log(state);
   return {
     notes: state.notes,
   };
@@ -82,7 +94,8 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createNote: (note) => dispatch(actions.createNote()),
+    createNote: (note) => dispatch(actions.createNote(note)),
+    removeNote: (index) => dispatch(actions.removeNote(index)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(App);
