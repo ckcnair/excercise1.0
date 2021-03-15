@@ -85,7 +85,6 @@ class App extends Component {
 }
 
 const mapStateToProps = (state, props) => {
-  console.log(state);
   return {
     notes: state.notes,
   };
